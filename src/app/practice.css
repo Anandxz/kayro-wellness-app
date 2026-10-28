@@ -1,0 +1,166 @@
+.practice-list {
+  display: grid;
+  gap: 12px;
+}
+.practice-appointment > *,
+.practice-client > div,
+.attention-person {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.practice-appointment {
+  display: grid;
+  grid-template-columns: 1.35fr 1.1fr 1fr 0.7fr 1fr;
+  gap: 20px;
+  align-items: center;
+  padding: 24px;
+}
+.practice-client {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+.practice-client h3 {
+  font-size: 14px;
+}
+.practice-client p {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 4px;
+}
+.practice-client a {
+  text-underline-offset: 3px;
+}
+.practice-client a:hover {
+  text-decoration: underline;
+}
+.practice-time strong {
+  font-size: 12px;
+  font-weight: 500;
+}
+.practice-time span,
+.practice-service span {
+  display: block;
+  font-size: 10px;
+  color: var(--muted);
+  margin-top: 4px;
+}
+.practice-service {
+  font-size: 11px;
+}
+.practice-status {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.practice-status small {
+  font-size: 9px;
+  color: var(--muted);
+}
+.attendance-badge {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  border: 1px solid transparent;
+  padding: 5px 11px;
+  border-radius: 30px;
+  font-size: 10px;
+  white-space: nowrap;
+}
+.status-booked {
+  background: #e9f0e1;
+  color: #47603b;
+  border-color: #d5e2c9;
+}
+.status-done {
+  background: #e5edf2;
+  color: #365d74;
+  border-color: #cbdde7;
+}
+.status-noshow {
+  background: #f7e9dc;
+  color: #88533a;
+  border-color: #e8cfba;
+}
+.status-cancelled {
+  background: #efeee9;
+  color: #6c6d64;
+  border-color: #dfdfd6;
+}
+.status-control select {
+  min-height: 44px;
+  width: 100%;
+  max-width: 170px;
+  padding: 9px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fffefa;
+  color: var(--foreground);
+  font-size: 10px;
+}
+.status-control select:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+.status-control small {
+  display: block;
+  color: var(--muted);
+  font-size: 9px;
+  margin-top: 5px;
+}
+.missing-phone {
+  color: #896b49;
+  font-style: italic;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .loading-pulse {
+    animation: pulse 1.2s ease-in-out infinite alternate;
+  }
+  @keyframes pulse {
+    to {
+      opacity: 0.35;
+    }
+  }
+}
+@media (max-width: 1000px) {
+  .practice-appointment {
+    grid-template-columns: 1.2fr 1fr 1fr;
+    gap: 18px;
+  }
+  .practice-status {
+    grid-column: 2;
+  }
+  .status-control {
+    grid-column: 3;
+  }
+  .practice-client {
+    grid-row: span 2;
+  }
+}
+@media (max-width: 640px) {
+  .practice-appointment {
+    padding: 22px;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px 12px;
+  }
+  .practice-client {
+    grid-column: 1 / -1;
+    grid-row: auto;
+  }
+  .practice-time {
+    grid-column: 1;
+  }
+  .practice-service {
+    grid-column: 2;
+  }
+  .practice-status {
+    grid-column: 1;
+  }
+  .status-control {
+    grid-column: 2;
+  }
+  .practice-status .attendance-badge {
+    font-size: 11px;
+  }
+}

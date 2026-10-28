@@ -1,0 +1,287 @@
+.reminder-list {
+  display: grid;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+.date-tile {
+  width: 86px;
+  flex: 0 0 86px;
+  padding: 12px 8px;
+  text-align: center;
+  line-height: 1.5;
+}
+.small-note {
+  font-size: 12px;
+}
+.practice-client p {
+  font-size: 12px;
+}
+.practice-time strong {
+  font-size: 13px;
+}
+.practice-time span,
+.practice-service span {
+  font-size: 11px;
+}
+.practice-service {
+  font-size: 12px;
+}
+.attendance-confirmation {
+  background: #f1f3e8;
+  border: 1px solid #dce4ce;
+  border-radius: 16px;
+  padding: 26px;
+  margin-top: 22px;
+}
+.reminder-list .attendance-confirmation {
+  margin-top: 0;
+}
+.intent-heading {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+.intent-heading .round-icon {
+  width: 40px;
+  height: 40px;
+}
+.intent-heading h2 {
+  font-size: clamp(1.4rem, 2.5vw, 1.8rem);
+  margin-top: 6px;
+}
+.intent-details {
+  font-size: 13px;
+  line-height: 1.8;
+  margin: 18px 0 12px;
+}
+.intent-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.intent-actions .button {
+  cursor: pointer;
+}
+.intent-confirmed {
+  background: #edf3eb;
+  border-color: #d2dfcc;
+}
+.confirmation-pill {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  padding: 4px 9px;
+  margin-top: 9px;
+  border-radius: 7px;
+  font-size: 10px;
+  line-height: 1.5;
+  border: 1px solid transparent;
+}
+.confirmation-pill.is-confirmed {
+  background: #e5efe0;
+  color: #3c5c33;
+  border-color: #cfdfc6;
+}
+.confirmation-pill.is-awaiting {
+  background: #f5eddd;
+  color: #7c6031;
+  border-color: #e7d9ba;
+}
+.practice-service span.confirmation-pill {
+  display: inline-flex;
+  color: #7c6031;
+  font-size: 10px;
+  margin-top: 9px;
+}
+.practice-service span.confirmation-pill.is-confirmed {
+  color: #3c5c33;
+}
+.attention-section {
+  padding: 25px;
+  border: 1px solid #e3decd;
+  background: #f5f3eb;
+  border-radius: 16px;
+  margin-top: 28px;
+}
+.attention-count {
+  display: inline-grid;
+  place-items: center;
+  vertical-align: middle;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #e9e4d4;
+  font:
+    11px Arial,
+    sans-serif;
+  letter-spacing: 0;
+  margin-left: 5px;
+}
+.attention-list {
+  display: grid;
+  gap: 12px;
+}
+.attention-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: #fffefa;
+  border: 1px solid #e8e2d3;
+  border-radius: 10px;
+  padding: 18px;
+}
+.attention-person {
+  flex: 1;
+}
+.attention-person h3 {
+  font-size: 14px;
+}
+.attention-person p {
+  color: var(--muted);
+  font-size: 11px;
+  margin-top: 4px;
+}
+.attention-person small {
+  color: var(--muted);
+  font-size: 10px;
+}
+.attention-item .confirmation-pill {
+  margin-top: 0;
+}
+.attention-clear {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 13px;
+  padding: 6px 0;
+}
+.attention-clear > .icon {
+  color: #7c906b;
+}
+.attention-clear span {
+  display: block;
+  color: var(--muted);
+  font-size: 11px;
+  margin-top: 4px;
+}
+.reschedule-note {
+  border: 1px solid #d2dfcc;
+  border-radius: 10px;
+  padding: 14px 20px;
+  background: #f0f5eb;
+  font-size: 13px;
+  text-align: left;
+  margin-top: 18px;
+}
+.connection-warning {
+  padding: 15px 20px;
+  margin: 8px 0 24px;
+  border: 1px solid #e6d2b5;
+  background: #faf1e2;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  font-size: 12px;
+}
+.connection-warning .button {
+  flex-shrink: 0;
+}
+.button:disabled {
+  transform: none;
+  cursor: not-allowed;
+}
+.booking-panel h2:focus {
+  outline-offset: 7px;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .attendance-confirmation {
+    animation: reminder-enter 0.2s ease-out;
+  }
+  @keyframes reminder-enter {
+    from {
+      opacity: 0;
+      translate: 0 4px;
+    }
+    to {
+      opacity: 1;
+      translate: 0 0;
+    }
+  }
+}
+@media (max-width: 640px) {
+  .date-tile {
+    width: 70px;
+    min-width: 70px;
+    flex-basis: 70px;
+    padding: 10px 5px;
+  }
+  .attendance-confirmation {
+    padding: 22px 18px;
+  }
+  .intent-heading {
+    gap: 10px;
+  }
+  .intent-heading .round-icon {
+    width: 34px;
+    height: 34px;
+  }
+  .intent-heading .eyebrow {
+    font-size: 8px;
+    letter-spacing: 0.09em;
+  }
+  .intent-heading h2 {
+    font-size: 24px;
+  }
+  .intent-details {
+    font-size: 12px;
+  }
+  .intent-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 9px;
+  }
+  .intent-actions > :first-child {
+    grid-column: 1 / -1;
+  }
+  .intent-actions .button {
+    font-size: 11px;
+    padding: 12px 10px;
+    gap: 9px;
+  }
+  .intent-actions > .button-quiet {
+    grid-column: 1 / -1;
+  }
+  .attention-section {
+    padding: 20px 16px;
+  }
+  .attention-section .section-heading {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .attention-item {
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 16px;
+  }
+  .attention-item > .round-icon {
+    width: 34px;
+    height: 34px;
+  }
+  .attention-person {
+    flex-basis: calc(100% - 50px);
+  }
+  .attention-item > .button {
+    margin-left: auto;
+  }
+  .attention-item .confirmation-pill {
+    font-size: 9px;
+  }
+  .connection-warning {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+}
