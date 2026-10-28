@@ -3,6 +3,7 @@ import { randomUUID } from "node:crypto";
 import { cookies } from "next/headers";
 import { AppError, config, database, databaseError } from "./database";
 import { signWorkspace, verifyWorkspace } from "./session-token";
+import { developmentDiagnostic } from "./diagnostics";
 const COOKIE = "kayro-demo-workspace";
 export function checkOrigin(request: Request) {
   if (request.headers.get("origin") !== config().origin)
@@ -30,12 +31,12 @@ export async function startWorkspace() {
       .eq("is_template", false)
       .gt("expires_at", new Date().toISOString())
       .maybeSingle();
-    if (error) databaseError(error);
+    if (error) databaseError(error, "workspace-read");
     if (data) return;
   }
   const id = randomUUID();
   const { error } = await database().rpc("create_demo_workspace", { p_id: id });
-  if (error) databaseError(error);
+  if (error) databaseError(error, "workspace-create");
   jar.set(COOKIE, signWorkspace(id, env.secret), {
     httpOnly: true,
     secure: env.origin.startsWith("https:"),
@@ -46,6 +47,11 @@ export async function startWorkspace() {
 }
 export function apiError(error: unknown) {
   const known = error instanceof AppError;
+  if (!known)
+    developmentDiagnostic("api-unexpected", {
+      code: "UNEXPECTED",
+      hint: "Unexpected server error. Raw error details are omitted to protect credentials and data.",
+    });
   return Response.json(
     {
       error: known ? error.message : "Something went wrong. Please try again.",

@@ -5,6 +5,11 @@ import type { Appointment, AppointmentStatus } from "@/lib/appointments";
 
 import { AppError } from "./errors";
 import { readConfiguration } from "./configuration";
+import {
+  developmentDiagnostic,
+  safeDatabaseDiagnostic,
+  type DiagnosticStage,
+} from "./diagnostics";
 export { AppError } from "./errors";
 export function config() {
   return readConfiguration(process.env);
@@ -59,10 +64,14 @@ export function mapAppointment(row: AppointmentRow): Appointment {
     updatedAt: row.updated_at,
   };
 }
-export function databaseError(error: {
-  code?: string;
-  message?: string;
-}): never {
+export function databaseError(
+  error: {
+    code?: string;
+    message?: string;
+  },
+  stage: DiagnosticStage = "database",
+): never {
+  developmentDiagnostic(stage, safeDatabaseDiagnostic(error));
   if (error.code === "40001")
     throw new AppError(
       409,
@@ -95,7 +104,7 @@ export async function listAppointments(workspace: string) {
     .eq("is_template", false)
     .gt("expires_at", new Date().toISOString())
     .maybeSingle();
-  if (sessionError) databaseError(sessionError);
+  if (sessionError) databaseError(sessionError, "workspace-read");
   if (!session)
     throw new AppError(
       401,
@@ -109,6 +118,6 @@ export async function listAppointments(workspace: string) {
     .eq("workspace_id", workspace)
     .order("starts_at")
     .limit(100);
-  if (error) databaseError(error);
+  if (error) databaseError(error, "appointments-read");
   return (data as AppointmentRow[]).map(mapAppointment);
 }

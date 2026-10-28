@@ -1,6 +1,13 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { readConfiguration } from "../src/lib/server/configuration";
+import {
+  inspectConfiguration,
+  readConfiguration,
+} from "../src/lib/server/configuration";
+import {
+  developmentDiagnostic,
+  safeDatabaseDiagnostic,
+} from "../src/lib/server/diagnostics";
 import { readJson } from "../src/lib/server/request-body";
 const good = {
   SUPABASE_URL: "https://fictional.supabase.co",
@@ -70,4 +77,66 @@ test("JSON requests validate media type, malformed JSON and actual streamed byte
     duplex: "half",
   } as RequestInit);
   await assert.rejects(() => readJson(streamed), { status: 413 });
+});
+test("configuration diagnostic identifies a publishable key without including its value", () => {
+  const sentinel = "sb_publishable_sensitive_fixture_do_not_log";
+  const report = inspectConfiguration({
+    ...good,
+    SUPABASE_SECRET_KEY: sentinel,
+  });
+  assert.deepEqual(
+    report.find((item) => item.name === "SUPABASE_SECRET_KEY"),
+    {
+      name: "SUPABASE_SECRET_KEY",
+      present: true,
+      valid: false,
+      reason: "publishable-key-is-not-a-server-secret",
+    },
+  );
+  assert.equal(JSON.stringify(report).includes(sentinel), false);
+  assert.throws(
+    () => readConfiguration({ ...good, SUPABASE_SECRET_KEY: sentinel }),
+    (error) =>
+      error instanceof Error &&
+      error.message.includes(
+        "SUPABASE_SECRET_KEY (publishable-key-is-not-a-server-secret)",
+      ) &&
+      !error.message.includes(sentinel),
+  );
+  assert.equal(report.filter((item) => item.valid).length, 3);
+});
+test("database diagnostic preserves safe error codes, omits provider content, and stays off in production", () => {
+  const provider = {
+    code: "PGRST202",
+    message: "secret=do-not-log",
+    details: "private SQL and client data",
+    status: 404,
+  };
+  const summary = safeDatabaseDiagnostic(provider);
+  assert.equal(summary.code, "PGRST202");
+  assert.match(summary.hint, /RPC/);
+  assert.equal(JSON.stringify(summary).includes(provider.message), false);
+  assert.equal(JSON.stringify(summary).includes(provider.details), false);
+  assert.equal(
+    safeDatabaseDiagnostic({ code: "sb_secret_private" }).code,
+    "UNCLASSIFIED",
+  );
+  const oldEnvironment = process.env.NODE_ENV;
+  const oldWarn = console.warn;
+  const outputs: string[] = [];
+  console.warn = (value) => outputs.push(String(value));
+  try {
+    Object.assign(process.env, { NODE_ENV: "production" });
+    developmentDiagnostic("database", summary);
+    assert.equal(outputs.length, 0);
+    Object.assign(process.env, { NODE_ENV: "development" });
+    developmentDiagnostic("database", summary);
+    assert.equal(outputs.length, 1);
+    assert.equal(outputs[0].includes(provider.message), false);
+  } finally {
+    console.warn = oldWarn;
+    if (oldEnvironment === undefined)
+      Reflect.deleteProperty(process.env, "NODE_ENV");
+    else Object.assign(process.env, { NODE_ENV: oldEnvironment });
+  }
 });

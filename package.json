@@ -13,7 +13,8 @@
     "typecheck": "next typegen && tsc --noEmit",
     "test": "node --import tsx --test tests/*.test.ts",
     "test:live": "node --import tsx scripts/verify-live.ts",
-    "test:http": "node --import tsx scripts/verify-http.ts"
+    "test:http": "node --import tsx scripts/verify-http.ts",
+    "diagnose:db": "node --import tsx scripts/diagnose-db.ts"
   },
   "dependencies": {
     "@radix-ui/react-alert-dialog": "^1.2.1",

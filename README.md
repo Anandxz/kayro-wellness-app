@@ -38,6 +38,8 @@ Never commit `.env.local`, expose secrets in browser code, or use a real secret 
 
 ## Database migrations and seed
 
+For setup errors, run `npm run diagnose:db` locally (`npm run diagnose:db -- --production` to use production environment-file loading). It prints only configuration presence/validity and redacted check results, never credential values. With valid configuration it performs read-only table/column, RPC metadata and seed-prerequisite checks. It does not create a workspace, execute mutation RPCs, apply migrations or reset data. Schema checks are not proof of CLI migration-history entries; inspect the project migration history separately if needed. In `npm run dev`, deduplicated `[Kayro server diagnostic]` terminal logs identify the failing stage and safe provider error code; those logs are disabled in production and are never added to browser responses.
+
 Run these files in Supabase SQL Editor **once each, in order**. Alternatively, initialize and link the Supabase CLI for a CLI-managed project, then run `supabase db push`. Use one migration workflow consistently; do not mix manual SQL execution with an unreconciled CLI migration history.
 
 1. `supabase/migrations/202610280001_appointments.sql` — tables, indexes, exclusion constraint, timestamps, RLS and base booking rules.
