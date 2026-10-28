@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import { Navigation } from "@/components/navigation";
 import { Icon, PreviewNotice } from "@/components/ui";
 import { BookingGate } from "@/components/client/booking-provider";
+import { PreviewToggle } from "@/components/client/client-preview";
 
 export function AppShell({
   children,
@@ -11,7 +12,7 @@ export function AppShell({
   children: ReactNode;
   dashboard?: boolean;
 }) {
-  return (
+  const shell = (
     <div className="app-shell">
       <header className="site-header">
         <div className="header-inner">
@@ -26,13 +27,16 @@ export function AppShell({
             kayro<span className="brand-period">.</span>
           </Link>
           <Navigation dashboard={dashboard} />
-          <Link
-            className="role-switch"
-            href={dashboard ? "/" : "/nutritionist"}
-          >
-            {dashboard ? "Client app" : "Practice space"}
-            <Icon name="arrow" />
-          </Link>
+          <div className="header-actions">
+            {!dashboard && <PreviewToggle />}
+            <Link
+              className="role-switch"
+              href={dashboard ? "/" : "/nutritionist"}
+            >
+              {dashboard ? "Client app" : "Practice space"}
+              <Icon name="arrow" />
+            </Link>
+          </div>
         </div>
       </header>
       <main id="main-content" className="main-container">
@@ -45,4 +49,5 @@ export function AppShell({
       </footer>
     </div>
   );
+  return dashboard ? <div className="responsive-surface">{shell}</div> : shell;
 }

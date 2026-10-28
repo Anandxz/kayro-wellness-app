@@ -3,6 +3,7 @@ import "./globals.css";
 import "./client.css";
 import "./practice.css";
 import "./reminders.css";
+import "./preview.css";
 import { BookingProvider } from "@/components/client/booking-provider";
 export const metadata: Metadata = {
   title: { default: "Kayro · Care at your own pace", template: "%s · Kayro" },

@@ -123,7 +123,7 @@
     }
   }
 }
-@media (max-width: 1000px) {
+@container kayro-app (max-width: 1000px) {
   .practice-appointment {
     grid-template-columns: 1.2fr 1fr 1fr;
     gap: 18px;
@@ -138,7 +138,7 @@
     grid-row: span 2;
   }
 }
-@media (max-width: 640px) {
+@container kayro-app (max-width: 640px) {
   .practice-appointment {
     padding: 22px;
     grid-template-columns: 1fr 1fr;

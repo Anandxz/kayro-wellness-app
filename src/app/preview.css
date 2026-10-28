@@ -1,0 +1,116 @@
+/* One app, one set of responsive rules. The client layout owns this container;
+   changing only its dimensions keeps routes, forms and the data provider mounted. */
+.responsive-surface {
+  container: kayro-app / inline-size;
+  width: 100%;
+}
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+.preview-toggle,
+.preview-toolbar {
+  display: none;
+}
+.preview-toggle {
+  align-items: center;
+  gap: 3px;
+  padding: 4px;
+  background: #eaece3;
+  border: 1px solid #dce1d4;
+  border-radius: 30px;
+  flex-shrink: 0;
+}
+.preview-toggle button {
+  min-height: 36px;
+  padding: 7px 12px;
+  font-size: 11px;
+  color: #63715e;
+  border-radius: 24px;
+  cursor: pointer;
+  transition:
+    background 0.16s,
+    color 0.16s;
+}
+.preview-toggle button[aria-pressed="true"] {
+  background: #fffefa;
+  color: #2d4d3a;
+  box-shadow: 0 1px 4px #243c2810;
+}
+.preview-caption {
+  font:
+    21px/1.4 Georgia,
+    serif;
+  margin-top: 4px;
+  letter-spacing: -0.025em;
+}
+
+/* Pointer/hover gating excludes touch phones in landscape as well as small
+   viewports. If the window narrows, the same mounted app fills the screen. */
+@media (min-width: 768px) and (hover: hover) and (pointer: fine) {
+  .preview-toggle {
+    display: inline-flex;
+  }
+  .client-preview[data-preview="mobile"] {
+    min-height: 100dvh;
+    padding: 0 24px 30px;
+    background: radial-gradient(
+      ellipse at 50% 40%,
+      #eef1e7 0,
+      var(--background) 65%
+    );
+  }
+  .client-preview[data-preview="mobile"] .preview-toolbar {
+    display: flex;
+    position: sticky;
+    top: 0;
+    z-index: 25;
+    max-width: 1000px;
+    min-height: 94px;
+    margin: 0 auto;
+    padding: 18px 0;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+    background: var(--background);
+  }
+  .client-preview[data-preview="mobile"] .preview-device {
+    position: relative;
+    width: 390px;
+    height: min(844px, calc(100dvh - 140px));
+    min-height: 480px;
+    margin: 10px auto 0;
+    border: 1px solid #cfd8c7;
+    border-radius: 38px;
+    overflow: hidden;
+    background: var(--background);
+    box-shadow:
+      0 0 0 7px #f0f2e9,
+      0 0 0 8px #dce2d4,
+      0 22px 65px #344d3224;
+    transform: translateZ(0);
+  }
+  .client-preview[data-preview="mobile"] .preview-scroll {
+    height: 100%;
+    overflow: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: #c5cfbb transparent;
+    border-radius: inherit;
+  }
+  .client-preview[data-preview="mobile"] .app-shell {
+    min-height: 100%;
+  }
+  .client-preview[data-preview="mobile"] .site-header .preview-toggle {
+    display: none;
+  }
+  .client-preview[data-preview="mobile"] .dialog-content {
+    max-height: calc(100% - 40px);
+  }
+}
+@container kayro-app (max-width: 640px) {
+  .header-actions {
+    gap: 8px;
+  }
+}

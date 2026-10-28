@@ -60,7 +60,7 @@ h2 {
   letter-spacing: -0.045em;
 }
 h1 {
-  font-size: clamp(2.7rem, 6vw, 4.8rem);
+  font-size: clamp(2.7rem, 6cqw, 4.8rem);
   line-height: 1.1;
 }
 h2 {
@@ -209,7 +209,7 @@ h3 {
 }
 .hero h1 {
   margin: 21px 0;
-  font-size: clamp(3rem, 5.5vw, 4.5rem);
+  font-size: clamp(3rem, 5.5cqw, 4.5rem);
 }
 .hero h1 em {
   color: #6b8263;
@@ -485,7 +485,7 @@ h3 {
   padding: 28px 0 34px;
 }
 .page-heading h1 {
-  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  font-size: clamp(2.5rem, 5cqw, 3.5rem);
   margin-top: 12px;
 }
 .service-grid {
@@ -620,7 +620,7 @@ h3 {
     }
   }
 }
-@media (max-width: 900px) {
+@container kayro-app (max-width: 900px) {
   .header-inner {
     padding: 16px 24px;
   }
@@ -657,8 +657,8 @@ h3 {
     max-width: 100px;
   }
 }
-@media (max-width: 640px) {
-  body {
+@container kayro-app (max-width: 640px) {
+  .app-shell {
     font-size: 14px;
   }
   .header-inner {
@@ -710,7 +710,7 @@ h3 {
     padding: 32px 27px 0;
   }
   .hero h1 {
-    font-size: clamp(2.7rem, 11.5vw, 4rem);
+    font-size: clamp(2.7rem, 11.5cqw, 4rem);
     margin: 18px 0;
   }
   .hero-description {

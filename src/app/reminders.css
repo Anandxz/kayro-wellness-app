@@ -46,7 +46,7 @@
   height: 40px;
 }
 .intent-heading h2 {
-  font-size: clamp(1.4rem, 2.5vw, 1.8rem);
+  font-size: clamp(1.4rem, 2.5cqw, 1.8rem);
   margin-top: 6px;
 }
 .intent-details {
@@ -210,7 +210,7 @@
     }
   }
 }
-@media (max-width: 640px) {
+@container kayro-app (max-width: 640px) {
   .date-tile {
     width: 70px;
     min-width: 70px;
